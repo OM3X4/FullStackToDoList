@@ -16,6 +16,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-)&3xiuowe53_3cguh-#-_t5oa@x1!g5&&uybkco(37@4f5z(*0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1' , "localhost"]
 
 
 # Application definition
@@ -38,10 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'base.apps.BaseConfig'
+    'corsheaders',
+    'base.apps.BaseConfig',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = False  # ✅ Restrict origins
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",      # Matches any localhost with any port
+    r"^http://127\.0\.0\.1:\d+$",   # Matches any 127.0.0.1 with any port
+    r"^http://192\.168\.10\.45:3000$",  # Specific network IP
+]
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # Must be first in the list
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

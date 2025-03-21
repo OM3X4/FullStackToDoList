@@ -53,7 +53,7 @@ def getTopics(request):
         if serial.is_valid():
             serial.save()
             return JsonResponse(serial.data , status=201)
-        return JsonResponse(status=400)
+        return JsonResponse({"error": "Task not found"} , status=400)
 
 
 @csrf_exempt
@@ -62,9 +62,9 @@ def toggleStatus(request , pk):
         task = Task.objects.get(id=pk)
         task.status = not task.status
         task.save()
-        return JsonResponse(status=200)
+        return JsonResponse( {"success": "Task found"} , status=200)
     except:
-        return JsonResponse(status=404)
+        return JsonResponse({"error": "Task not found"} , status=404)
 
 
 
